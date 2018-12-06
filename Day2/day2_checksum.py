@@ -27,5 +27,34 @@ def get_checksum():
                 line_3s +=1
     return line_2s * line_3s
 
-result = get_checksum()
-print 'the checksum is ', result
+
+def get_one_diff():
+    with open("input.txt", "r") as file:
+        differences = None
+
+        for line in file:
+            line = line.strip()
+            max_ln = len(line)
+            print max_ln
+            if not differences:
+                differences = [defaultdict(list)] * max_ln
+
+            for i in range(max_ln):
+                if i == 0:
+                    remove_i = line[1:]
+                elif i == max_ln - 1:
+                    remove_i = line[:-1]
+                else:
+                    remove_i = line[:i] + line[i+1:]
+
+                print remove_i, 'at', i
+                def_dict_i = differences[i]
+                if remove_i in def_dict_i:
+                    return remove_i, def_dict_i
+                else:
+                    differences[i][remove_i].append(line)
+        return ""
+
+
+result = get_one_diff()
+print 'the one diff is ', result
